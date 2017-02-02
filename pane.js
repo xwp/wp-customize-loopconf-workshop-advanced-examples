@@ -176,6 +176,37 @@ wp.customize.LoopConfWorkshopAdvancedExamplesPane = (function( $ ) {
 		gathering.greet( 'Jane' ); // No greeted event logged.
 	};
 
+	/**
+	 * Try third events example.
+	 */
+	component.tryEventsExample3 = function() {
+
+		// Watch for the first expansion of each added section.
+		var logSectionFirstExpanded = function( section ) {
+			var onceExpanded, onExpandedChange;
+			onceExpanded = function() {
+				console.info( 'Section "%s" expanded! You should now lazy-load your controls if needed.', section.id );
+			};
+			if ( section.expanded.get() ) {
+				onceExpanded( section ); // Already expanded so no need for onExpandedChange.
+			} else {
+				onExpandedChange = function( isExpanded ) {
+					if ( isExpanded ) {
+						section.expanded.unbind( onExpandedChange ); // Value#unbind().
+						onceExpanded( section );
+					}
+				};
+				section.expanded.bind( onExpandedChange ); // Value#bind().
+			}
+		};
+
+		// Watch any sections already added.
+		wp.customize.section.each( logSectionFirstExpanded );
+
+		// Watch for sections newly added.
+		wp.customize.section.bind( 'add', logSectionFirstExpanded ); // Events#bind().
+	};
+
 	// Message-passing examples.
 	wp.customize.bind( 'ready', function() {
 		wp.customize.previewer.bind( 'ready', function() {
