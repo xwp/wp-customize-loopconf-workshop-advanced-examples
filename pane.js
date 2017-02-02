@@ -130,6 +130,29 @@ wp.customize.LoopConfWorkshopAdvancedExamplesPane = (function( $ ) {
 		} );
 	};
 
+	/**
+	 * Try first events example.
+	 */
+	component.tryEventsExample1 = function() {
+		var party = {
+			greet: function( name ) {
+				console.log( 'Hello, %s!', name );
+				party.trigger( 'greeted', name );
+			},
+
+			onGreeted: function( greetedName ) {
+				console.log( '%s was greeted!', greetedName );
+			}
+		};
+
+		_.extend( party, wp.customize.Events ); // <== Mixin!
+
+		party.bind( 'greeted', party.onGreeted );
+		party.greet( 'John' ); // Logs greeted event.
+		party.unbind( 'greeted', party.onGreeted );
+		party.greet( 'Jane' ); // No greeted event logged.
+	};
+
 	// Message-passing examples.
 	wp.customize.bind( 'ready', function() {
 		wp.customize.previewer.bind( 'ready', function() {
