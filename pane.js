@@ -137,20 +137,43 @@ wp.customize.LoopConfWorkshopAdvancedExamplesPane = (function( $ ) {
 		var party = {
 			greet: function( name ) {
 				console.log( 'Hello, %s!', name );
-				party.trigger( 'greeted', name );
-			},
-
-			onGreeted: function( greetedName ) {
-				console.log( '%s was greeted!', greetedName );
+				this.trigger( 'greeted', name );
 			}
 		};
 
 		_.extend( party, wp.customize.Events ); // <== Mixin!
 
-		party.bind( 'greeted', party.onGreeted );
+		var onGreeted = function( greetedName ) {
+			console.log( '%s was greeted!', greetedName );
+		};
+
+		party.bind( 'greeted', onGreeted );
 		party.greet( 'John' ); // Logs greeted event.
-		party.unbind( 'greeted', party.onGreeted );
+		party.unbind( 'greeted', onGreeted );
 		party.greet( 'Jane' ); // No greeted event logged.
+	};
+
+	/**
+	 * Try second events example.
+	 */
+	component.tryEventsExample2 = function() {
+		var Party = wp.customize.Class.extend( {
+			greet: function( name ) {
+				console.log( 'Hello, %s!', name );
+				this.trigger( 'greeted', name );
+			}
+		} );
+		_.extend( Party.prototype, wp.customize.Events ); // <== Mixin!
+
+		var onGreeted = function( greetedName ) {
+			console.log( '%s was greeted!', greetedName );
+		};
+
+		var gathering = new Party();
+		gathering.bind( 'greeted', onGreeted );
+		gathering.greet( 'John' ); // Logs greeted event.
+		gathering.unbind( 'greeted', onGreeted );
+		gathering.greet( 'Jane' ); // No greeted event logged.
 	};
 
 	// Message-passing examples.
