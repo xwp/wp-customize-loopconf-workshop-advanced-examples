@@ -32,6 +32,8 @@
 
 namespace Customize_LoopConf_Workshop_Advanced_Examples;
 
+require_once __DIR__ . '/favorite-items.php';
+
 /**
  * Enqueue scripts for the customizer pane/controls/previewer.
  */

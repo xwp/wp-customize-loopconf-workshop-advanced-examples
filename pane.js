@@ -1,6 +1,6 @@
 /* global wp, console */
 
-wp.customize.LoopConfWorkshopAdvancedExamplesPane = (function( $ ) {
+wp.customize.LoopConfWorkshopAdvancedExamplesPane = (function() {
 	'use strict';
 
 	var component = {};
@@ -248,4 +248,4 @@ wp.customize.LoopConfWorkshopAdvancedExamplesPane = (function( $ ) {
 
 	return component;
 
-})( jQuery );
+})();
