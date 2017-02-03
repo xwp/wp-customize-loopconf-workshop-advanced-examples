@@ -33,24 +33,39 @@ wp.customize.LoopConfWorkshopAdvancedExamplesPane = (function( $ ) {
 	};
 
 	/**
-	 * Try second Value examples.
+	 * Value 2a: Update a setting.
 	 */
-	component.tryValueExample2 = function() {
-		// Update a setting.
+	component.tryValueExample2a = function() {
 		wp.customize( 'blogdescription' ).set( 'Just another customizer-managed site.' );
+	};
 
-		// Move Site Identity section to the bottom.
+	/**
+	 * Value 2b: Move Site Identity section to the bottom.
+	 */
+	component.tryValueExample2b = function() {
 		wp.customize.section( 'title_tagline' ).priority.set( 100000 );
+	};
 
-		// Switch to mobile preview.
+	/**
+	 * Value 2c: Switch to mobile preview.
+	 */
+	component.tryValueExample2c = function() {
 		wp.customize.previewedDevice.set( 'mobile' );
+	};
 
-		// Toggle controls pane being expanded.
+	/**
+	 * Value 2d: Toggle controls pane being expanded.
+	 */
+	component.tryValueExample2d = function() {
 		var paneVisibleState = wp.customize.state( 'paneVisible' );
 		paneVisibleState.set( ! paneVisibleState.get() );
+	};
 
-		// Create Site Title input that, along with blogname control, syncs with blogname setting.
-		var inputElement = jQuery( '<input placeholder="Site Title" style="width:100%">' );
+	/**
+	 * Value 2e: Create Site Title input that, along with blogname control, syncs with blogname setting.
+	 */
+	component.tryValueExample2e = function() {
+		var inputElement = jQuery( '<input placeholder="Site Title" class="widefat">' );
 		jQuery( '#customize-header-actions' ).append( inputElement );
 		var elementModel = new wp.customize.Element( inputElement );
 		elementModel.set( wp.customize( 'blogname' ).get() );
@@ -58,61 +73,73 @@ wp.customize.LoopConfWorkshopAdvancedExamplesPane = (function( $ ) {
 	};
 
 	/**
-	 * Try first Values examples.
+	 * Values 1a: Each control.
 	 */
-	component.tryValuesExample1 = function() {
-		// Each control.
+	component.tryValuesExample1a = function() {
 		var mediaControls = [];
 		wp.customize.control.each( function( control ) {
 			if ( control.extended( wp.customize.MediaControl ) ) {
 				mediaControls.push( control );
 			}
 		} );
+		console.info( 'Media controls:', _.pluck( mediaControls, 'id' ) );
+	};
 
-		// Has section.
-		if ( ! wp.customize.section.has( 'colors' ) ) {
-			console.info( 'Is your theme too gray?' );
-		}
+	/**
+	 * Values 1b: Has section.
+	 */
+	component.tryValuesExample1b = function() {
+		console.log( wp.customize.section.has( 'colors' ) ? 'Double rainbow?' : 'Dreary?' );
+	};
 
-		// Getter for panel.
+	/**
+	 * Values 1c: Getter for panel.
+	 */
+	component.tryValuesExample1c = function() {
 		var widgetsPanel = wp.customize.panel( 'widgets' );
 		widgetsPanel.priority.set( 1 ); // Widgets are important!
+	};
 
-		// Remove section.
+	/**
+	 * Values 1d: Remove section.
+	 */
+	component.tryValuesExample1d = function() {
 		var section = wp.customize.section( 'title_tagline' );
 		wp.customize.section.remove( section.id );
 		section.container.remove(); // Shouldn't be needed in future.
 	};
 
 	/**
-	 * Try second Values examples.
+	 * Values 2a: Make the blogname control appear at the end when it is available.
 	 */
-	component.tryValuesExample2 = function() {
-
-		// Make the blogname control appear at the end when it is available.
+	component.tryValuesExample2a = function() {
 		wp.customize.control( 'blogname', function( control ) {
 			control.priority.set( 1000 );
 		} );
+	};
 
-
-		// Single-setting deferred (this should look very familiar!)
+	/**
+	 * Values 2b: Single-setting deferred (this should look very familiar!)
+	 */
+	component.tryValuesExample2b = function() {
 		wp.customize( 'blogname', function( setting ) {
 			console.info( 'Your site is named:', setting.get() );
 		} );
+	};
 
-
-		// Multi-setting deferred: Let the title and tagline settings sync with each other (why not).
+	/**
+	 * Values 2c: Multi-setting deferred: Let the title and tagline settings sync with each other (why not).
+	 */
+	component.tryValuesExample2c = function() {
 		wp.customize( 'blogname', 'blogdescription', function( title, tagline ) {
 			title.sync( tagline );
 		} );
 	};
 
 	/**
-	 * Try third Values examples.
+	 * Values 3: Warn users of capital_P_dangit shame, but allow them to proceed anyway.
 	 */
 	component.tryValuesExample3 = function() {
-
-		// Warn users of capital_P_dangit shame, but allow them to proceed anyway.
 		wp.customize( 'blogdescription', function( setting ) {
 			var code = 'capital_P_dangit';
 			setting.bind( function( value ) {
@@ -131,7 +158,7 @@ wp.customize.LoopConfWorkshopAdvancedExamplesPane = (function( $ ) {
 	};
 
 	/**
-	 * Try first events example.
+	 * Events 1.
 	 */
 	component.tryEventsExample1 = function() {
 		var party = {
@@ -154,7 +181,7 @@ wp.customize.LoopConfWorkshopAdvancedExamplesPane = (function( $ ) {
 	};
 
 	/**
-	 * Try second events example.
+	 * Events 2.
 	 */
 	component.tryEventsExample2 = function() {
 		var Party = wp.customize.Class.extend( {
@@ -177,7 +204,7 @@ wp.customize.LoopConfWorkshopAdvancedExamplesPane = (function( $ ) {
 	};
 
 	/**
-	 * Try third events example.
+	 * Events 3.
 	 */
 	component.tryEventsExample3 = function() {
 
